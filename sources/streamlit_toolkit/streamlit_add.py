@@ -7,19 +7,38 @@ import streamlit as st
 # st.title('The Recipinator')
 
 
-def add_recipe():
+def add_recipe(recipe=None, recipe_dict=None):
 
+    if recipe==None:
+        recipe_dict = {
+            'name':'',
+            'cookbook':'',
+            'page':'',
+            'ingredient_1':'',
+            'ingredient_2':'',
+            'ingredient_3':'',
+            'ingredient_4':'',
+            'other_ingredients':'',
+            'regime':'',
+        }
+
+    
     with st.form('recipe'):
 
         # These methods called on the form container, so they appear inside the form.
-        name = st.text_input('Nom de la recette:', '')
-        cookbook = st.text_input('Livre:','')
-        page = st.text_input('Page','')
-        ingredient_1 = st.text_input('Ingredient 1 (indispensable)', '')
-        ingredient_2 = st.text_input("Ingredient 2 (difficile de s'en passer)", '')
-        ingredient_3 = st.text_input("Ingredient 3 (peut-être qu'on peut imaginer une substitution)",'')
-        ingredient_4 = st.text_input("Ingredient 4 (ce serait dommage de ne pas en mettre)",'')
-        other_ingredients = st.text_input("Autres ingrédients (à marmitonner)", '')
+        name = st.text_input('Nom de la recette:', recipe_dict['name'])
+        cookbook = st.text_input('Livre:',recipe_dict['cookbook'])
+        page = st.text_input('Page',recipe_dict['page'])
+        ingredient_1 = st.text_input('Ingredient 1 (indispensable)', 
+                                     recipe_dict['ingredient_1'])
+        ingredient_2 = st.text_input("Ingredient 2 (difficile de s'en passer)", 
+                                     recipe_dict['ingredient_2'])
+        ingredient_3 = st.text_input("Ingredient 3 (peut-être qu'on peut imaginer une substitution)",
+                                     recipe_dict['ingredient_3'])
+        ingredient_4 = st.text_input("Ingredient 4 (ce serait dommage de ne pas en mettre)",
+                                     recipe_dict['ingredient_4'])
+        other_ingredients = st.text_input("Autres ingrédients (à marmitonner)", 
+                                          recipe_dict['other_ingredients'])
         
         submit = st.form_submit_button('Ajouter la recette')
 
