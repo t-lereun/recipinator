@@ -58,7 +58,8 @@ if oral_recipe or st.session_state.oral_recipe:
 
     # st.markdown("**Ma recette !**")
 
+    title = write_recipe.recipe_title()
     text = write_recipe.recipe_textbox()
 
-    write_recipe.save_text(text)
+    write_recipe.save_text(text, title)
 

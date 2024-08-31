@@ -1,0 +1,192 @@
+january:
+  good: 
+    - ail 
+    - betterave
+    - céleri-branche
+    - salsifi 
+    - physalis 
+    - chous
+    - endive 
+    - clémentines 
+    - truffes
+  best:
+    - amande sèche
+    - kaki
+
+
+february:
+  good:
+    - radis noir 
+    - poireaux
+    - chou fleur
+    - pleurotes
+  best:
+    - lentilles
+    - blettes
+
+march:
+  good:
+    - épinards
+    - blettes
+    - carotte
+    - kiwi
+    - brocoli
+  best:
+    - poireaux
+    - asperge sauvage
+    - agrumes
+
+april:
+  good:
+    - blettes
+    - carottes
+    - cébettes
+  best:
+    - asperges
+    - radis
+
+may: 
+  good:
+    - pommes de terre nouvelles
+    - fraises
+    - concombre
+  best: 
+    - mangetout
+    - navet primeur
+
+june:
+  good: 
+    - haricots verts
+    - navet
+    - épinards
+    - fèves
+    - fraises
+    - tomme fraîche
+    - chèvre frais
+    - prunes
+  best:
+    - courgettes
+
+july: 
+  good: 
+    - haricots verts
+    - navet
+    - épinards
+    - fèves
+    - fraises
+    - tomme fraîche
+    - chèvre frais
+    - prunes
+    - concombres
+    - melons
+    - abricots
+    - poivrons
+    - courgettes
+  best:
+    - tomates
+    - aubergines
+    - chèvre frais
+    - moules
+    - pommes de terre nouvelles
+    - mûres
+
+
+august: 
+  good: 
+    - haricots verts
+    - navet
+    - épinards
+    - fèves
+    - fraises
+    - tomme fraîche
+    - chèvre frais
+    - prunes
+    - concombres
+    - melons
+    - abricots
+    - poivrons
+    - courgettes
+    - potimarron
+  best:
+    - aubergines
+    - chèvre frais
+    - moules
+    - pommes de terre nouvelles
+    - mûres
+
+september:
+  good:
+    - prunes
+    - courges
+    - raisin
+    - aubergines
+    - courgettes
+    - mures
+    - tomates
+    - choux
+    - brocolli
+  best:
+    - figues
+    - raisin
+    - mirabelles
+    - panais
+    - fenouil
+
+october:
+  good:
+    - choux verts
+    - choux blancs
+    - choux fleur
+    - choux romanesco
+    - brocolis
+    - châtaignes
+    - champignons sauvages
+    - carottes
+    - pomme
+    - grenade
+    - blette
+  best:
+    - courges
+    - poires
+
+november:
+  good: 
+    - courges
+    - raisin
+    - brocoli
+    - grenade
+    - patates douces
+    - choux bruxelles
+    - oignons
+    - fenouil
+    - rutabaga
+    - figues de barbarie
+    - kiwi
+    - maïs
+    - pommes
+    - poires
+    - citron vert
+  best:
+    - betterave primeur
+    - pomme de terre primeur
+    - radis
+    - blettes
+    - châtaignes
+    - kakis
+
+december:
+  good: 
+    - kakis
+    - pois cassés
+    - navet
+    - épinards
+    - mâche
+    - clémentine
+    - mandarines
+  best: 
+    - huile d'olive 
+    - pommes reinette
+
+  
+
+

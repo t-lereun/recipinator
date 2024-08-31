@@ -1,37 +1,38 @@
 import streamlit as st
+from sources.streamlit_toolkit import seasons
+from sources import common
+import os
+from sources import init_database
+from sources.streamlit_toolkit import streamlit_add
 
 
 st.set_page_config(
-page_title="Le Recipinator: accueil",
-page_icon="mioum",
+page_title="Accueil",
+page_icon="🥕",
 )
 
-st.markdown(
-    """
-    #  Le Recipinator
+# Get the text
+introduction_path = os.path.join(common.ROOT,'msg','introduction.md')
+introduction_txt = common.read_txt(introduction_path)
 
-    _Le Recipinator_ est un programme pour collecter et trier les recettes
-    en fonction des ingrédients, des saisons, et du régime alimentaire... 
-    Du moins c'est ce qu'il aspire à devenir à mesure que le projet se 
-    développera. 
-"""
-)
+st.markdown(introduction_txt)
 
+seasons.gaz_show()
 
-# def add_recipe():
-#     import streamlit as st
+# Check if db exist
+db_exists, db_list = init_database.check_db()
 
-#     st.markdown(f"# Ajout d'une recette")
+st.markdown("## Gestion des bases de données")
 
+if not(db_exists):
+    st.markdown("**Il n'existe aucune base de données de recettes**  ")
 
-#     streamlit_add.add_recipe()
+else: 
+    st.markdown("Voici les bases de données existantes")
 
-# page_names_to_funcs = {
-#     "—": intro,
-#     "Ajout d'une recette": add_recipe,
-# }
+    for db in db_list:
+        path, filename = os.path.split(db)
+        st.markdown(f"- {filename}")
 
-# if __name__=="__main__":
-
-#     demo_name = st.sidebar.selectbox("Choose a demo", page_names_to_funcs.keys())
-#     page_names_to_funcs[demo_name]()
+st.markdown("**En ajouter une nouvelle ?**")
+streamlit_add.add_db()

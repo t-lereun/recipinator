@@ -2,9 +2,35 @@ import pandas as pd
 import sqlite3 as sqlite
 from pandas import read_sql_query, read_sql_table
 from sources import add_recipe as ar
+from sources import init_database, common
 import streamlit as st
+import os
 
 # st.title('The Recipinator')
+DB_DIR = init_database.DB_DIR
+
+def add_db():
+
+    db_name = st.text_input("Nom de la nouvelle base de données (sans extension)",
+                  value='recipes')
+    
+    # Path to db
+    db_path = os.path.join(DB_DIR,f"{db_name}.db")
+
+    file_exists = os.path.isfile(db_path)
+
+    db_btn = st.button("Ajouter")
+    if db_btn:
+        if file_exists:
+            msg = "**Il existe déjà une base de donnée portant ce nom !**"
+        else: 
+            init_database.init_database(db_name)
+            msg = "Base de donnée ajoutée !"
+
+        st.markdown(msg)
+
+            
+        
 
 
 def add_recipe(recipe=None, recipe_dict=None):

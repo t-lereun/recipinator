@@ -1,4 +1,9 @@
 import sqlite3
+from sources import common
+import os
+import glob
+
+DB_DIR = os.path.join(common.ROOT,'recipes')
 
 
 keys = ['name', 'cookbook', 'page', 'ingredient_1','ingredient_2', 'ingredient_3', 'ingredient_4', 'other_ingredients']
@@ -11,12 +16,34 @@ dtype = {
     'ingredient_3':'TEXT',
     'ingredient_4':'TEXT',
     'other_ingredients':'TEXT',
+    'comment':'TEXT'
     }
 
-def init_database():
+def check_db():
+    # list de db files
+    list_db = glob.glob(os.path.join(DB_DIR,"*.db"))
+
+    if len(list_db)==0:
+        res = False
+    else: 
+        res = True
+
+    return res, list_db
+    # print(os.path.join(DB_DIR,"*.db"))
+    # print(list_db)
+
+def init_database(db_name):
 
 
-    conn = sqlite3.connect("recipes.db")
+    # First replace spaces
+    db_name = db_name.replace(' ','_')
+
+    # Path to db
+    db_path = os.path.join(DB_DIR,f"{db_name}.db")
+
+    
+
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
 
     # create Recipe table - Holds gross recipe information
@@ -28,47 +55,41 @@ def init_database():
     print(sql)
     c.execute(sql)
 
-        # sql = f"CREATE TABLE IF NOT EXISTS {k} "
-        # sql += f"([id] INTEGER PRIMARY KEY, {k} {dtype[k]})"
-        # print(sql)
-
-        # c.execute(sql)
-
 
     conn.commit()
 
-    my_recipe = {
-        'name':'Toad-in-the-hole',
-        'cookbook':'OTK',
-        'page':'106',
-        'ingredient_1':'céleri-rave',
-        'ingredient_2':'betterave',
-        'ingredient_3':'farine',
-        'ingredient_4':'oeuf',
-        'other_ingredients':"sirop érable, lait, moutarde, rutabaga",
-        }
+    # my_recipe = {
+    #     'name':'Toad-in-the-hole',
+    #     'cookbook':'OTK',
+    #     'page':'106',
+    #     'ingredient_1':'céleri-rave',
+    #     'ingredient_2':'betterave',
+    #     'ingredient_3':'farine',
+    #     'ingredient_4':'oeuf',
+    #     'other_ingredients':"sirop érable, lait, moutarde, rutabaga",
+    #     }
 
-    conn = sqlite3.connect("recipes.db")
-    c = conn.cursor()
+    # conn = sqlite3.connect("recipes.db")
+    # c = conn.cursor()
 
 
-    str_k_list = ''
-    val_str  = ''
-    for k in keys:
-        str_k_list += f' {k}, '
-        val_str += f"'{my_recipe[k]}', "
+    # str_k_list = ''
+    # val_str  = ''
+    # for k in keys:
+    #     str_k_list += f' {k}, '
+    #     val_str += f"'{my_recipe[k]}', "
             
 
         
-    # sql = 'INSERT INTO Recipes(name, servings, source) VALUES("Pasta with bacon and tomato sauce", 3, "Arthur Ngondo")'
-    sql = f'INSERT INTO Recipes({str_k_list[:-2]}) VALUES({val_str[:-2]})'
+    # # sql = 'INSERT INTO Recipes(name, servings, source) VALUES("Pasta with bacon and tomato sauce", 3, "Arthur Ngondo")'
+    # sql = f'INSERT INTO Recipes({str_k_list[:-2]}) VALUES({val_str[:-2]})'
 
-    print(sql)
+    # print(sql)
 
-    c.execute(sql)
+    # c.execute(sql)
 
 
-    conn.commit()
+    # conn.commit()
 
 if __name__=='__main__':
     init_database()

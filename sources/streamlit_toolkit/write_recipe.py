@@ -12,11 +12,11 @@ EXT = 'md'
 
 
 # Default text
-ingredient_default = "# Ingrédients\n"
+ingredient_default = "## Ingrédients\n"
 # ingredient_default += "\n" + 30*"=" +"\n"
 ingredient_default += "\n- 200 g de sel\n"
 
-instructions_default = "\n# Instructions\n"
+instructions_default = "\n## Instructions\n"
 # instructions_default += "\n" + 30*"=" +"\n"
 instructions_default += "\n1. Verser dans la terrine, verser dans la terrine"
 
@@ -25,17 +25,25 @@ recipe_default = ingredient_default + instructions_default
 # Height of the text area
 HEIGHT = 500 # pix
 
+def recipe_title():
+    title = st.text_input("**Comment s'appelle la recette ?**", 
+                          "")
+    
+    return title
 
 def recipe_textbox():
 
-    label = "**Ma recette**"
+    label = "**MIngrédients et instructions** (_en markdown_)"
     text = st.text_area(label, value=recipe_default, 
                 height=HEIGHT,
                 key='recipe_area',) 
     
     return text
 
-def write_to_file(path, text):
+def write_to_file(path, text, title):
+
+    # Add title to text
+    text = f"# {title}\n\n" + text 
 
     with open(path,'w') as f:
         f.write(text)
@@ -43,15 +51,11 @@ def write_to_file(path, text):
         
 
 
-def save_text(text):
+def save_text(text, title):
 
-    with st.form(key='recipe_name'):
-        name_txt = "Comment s'appelle la recette ?"
-        recipe_name = st.text_input(name_txt, 
-                                    key='name_input')
-        recipe_name.replace(' ','_')
-        text_button = "C'est _moi_ qui l'ai fait"
-        save_recipe = st.form_submit_button(text_button)
+    recipe_name= title.replace(' ','_')
+    text_button = "C'est _**moi**_ qui l'ai fait"
+    save_recipe = st.button(text_button)
 
     if save_recipe:
         recipe_path = os.path.join(RECIPES_PATH,
@@ -63,11 +67,15 @@ def save_text(text):
             force_btn = st.button("**Engregistrer quand même !**")
             
             if force_btn:
-                write_to_file(recipe_path, text)
+                write_to_file(recipe_path, text, title)
+                text = f"# {title}\n\n" + text 
 
         else: 
-            write_to_file(recipe_path, text)
-            
+            write_to_file(recipe_path, text, title)
+
+        text = f"# {title}\n\n" + text 
+        st.markdown(text)
+                
 
         
 
