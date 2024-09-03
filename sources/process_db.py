@@ -3,6 +3,7 @@ from sources.init_database import keys
 import os
 from pathlib import Path
 import numpy as np
+from sources import common
 
 ingredient_keys = ['ingredient_1','ingredient_2','ingredient_3','ingredient_4','other_ingredients']
 
@@ -33,6 +34,7 @@ def filter(df, filter=None):
 
 
             list_ingredients = full_ingredient_list.split(',')
+            # print(list_ingredients)
             for j, l in enumerate(list_ingredients):
                 l = l.strip()
                 if l in forbidden:
@@ -46,6 +48,7 @@ def filter(df, filter=None):
         
 
         return df[df[filter_key]==True]
+
     
 
 def filter_by_ingredient(df, ingredient=None):
@@ -59,9 +62,9 @@ def filter_by_ingredient(df, ingredient=None):
         for i, row in df.iterrows():
             full_ingredient_list = ''
             for k in ingredient_keys:
+                print(df.loc[i,k])
                 full_ingredient_list += df.loc[i,k] + ','
             full_ingredient_list = full_ingredient_list[:-1]
-
 
             list_ingredients = full_ingredient_list.split(',')
             for j, l in enumerate(list_ingredients):
@@ -75,6 +78,38 @@ def filter_by_ingredient(df, ingredient=None):
         res = df
 
     return res
+
+def scrap_ingredients(db_name):
+
+    if not(db_name is None): 
+
+
+        # Atm, use a dataframe to process the recipes
+        df = common.db_to_df(db_name)
+        full_ingredient_list = []
+
+        for i, row in df.iterrows():
+            ingredients_string = ''
+            for k in ingredient_keys:
+                ingredients_string += df.loc[i,k] + ','
+            ingredients_string = ingredients_string[:-1]
+            print("string", ingredients_string)
+
+            list_ingredients = ingredients_string.split(',')
+            list_ingredients = [l.strip() for l in list_ingredients]
+            print("full ing", full_ingredient_list)
+            print(list_ingredients)
+
+            full_ingredient_list.extend(list_ingredients)
+        
+        full_ingredient_list = np.asarray(full_ingredient_list)
+
+        return np.unique(full_ingredient_list)
+    
+    else:
+        pass
+
+
 
 
 

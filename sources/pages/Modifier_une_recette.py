@@ -44,7 +44,10 @@ if not(database==None):
     
     recipe_dict = add_recipe.get_recipe_dict(database=path_to_db, name=recipe)
     
+
 if not(recipe==None):
+
+    print("in st", recipe_dict)
 
     streamlit_add.add_recipe(recipe, recipe_dict)
 

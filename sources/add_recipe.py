@@ -7,8 +7,6 @@ DEFAULT_DB = os.path.join(Path(__file__).parents[1],'recipes','recipes.db')
 print(str(DEFAULT_DB))
 # "./recipes/recipes.db"
 
-
-
 def add_recipe(database= DEFAULT_DB, 
                name=None, cookbook=None, page=None, 
                ingredient_1=None, ingredient_2=None,
@@ -27,24 +25,68 @@ def add_recipe(database= DEFAULT_DB,
         'ingredient_3':ingredient_3,
         'ingredient_4':ingredient_4,
         'other_ingredients':other_ingredients,
-        'regime':regime,
+        #'regime':None
     }
 
+    id_number = find_from_name(database=DEFAULT_DB, name=name)
+    print(id_number)
 
-    str_k_list = ''
-    val_str  = ''
+    # if not(id_number is None):
+    #     recipe_dict['id']=id_number
+
+    # print(recipe_dict)
+
+
+    # for k in keys:
+    #     print(k,recipe_dict[k])
+
+    str_k_list = '('
+
     for k in keys:
-        str_k_list += f' {k}, '
-        val_str += f"'{recipe_dict[k]}', "
-        
-
+        str_k_list += f'{k}, '
     
-    # sql = 'INSERT INTO Recipes(name, servings, source) VALUES("Pasta with bacon and tomato sauce", 3, "Arthur Ngondo")'
-    sql = f'INSERT INTO Recipes({str_k_list[:-2]}) VALUES({val_str[:-2]})'
+    if len(id_number)>0:
+        str_k_list =  str_k_list+' id )'
+    else: 
+        str_k_list = str_k_list[:-2]+')'
 
-    print(sql)
+    if len(id_number)>0:
+        recipe_dict['id'] = id_number[0][0]
+        
+    tuple_vals = tuple(recipe_dict[k] for k in recipe_dict.keys())
+    print(tuple_vals)
+    nvals = len(tuple_vals)
+    qmark = nvals*'?, '
+    str_var = f'({qmark[:-2]})'
+    print(str_var)
 
-    c.execute(sql)
+        # tuple_names = (f"{k}" for k in recipe_dict.keys())
+        # tuple
+    sql_str = f"insert or replace into Recipes{str_k_list} values {str_var}"
+    print(sql_str)
+    c.execute(sql_str, 
+            tuple_vals)   
+    # else: 
+    #     c.execute(f"insert into Recipes( {k}) values (?)", 
+    #             (recipe_dict[k],))
+
+
+    # str_k_list = ''
+    # val_str  = ''
+    # for k in keys:
+    #     str_k_list += f' {k}, '
+    #     val_str += f"'{recipe_dict[k]}', "
+        
+    # print(str_k_list)
+    # print(val_str)
+    
+    # # # sql = 'INSERT INTO Recipes(name, servings, source) VALUES("Pasta with bacon and tomato sauce", 3, "Arthur Ngondo")'
+    # # sql = f"insert into Recipes(?) values (?)", (str_k_list[:-2],val_str[:-2],)
+    # sql = f'INSERT INTO Recipes({str_k_list[:-2]}) VALUES({val_str[:-2]})'
+
+    # print(sql)
+
+    # c.execute(sql)
 
 
     conn.commit()
@@ -74,12 +116,17 @@ def find_from_name(database=DEFAULT_DB, name=None):
 
     return ids
 
-def delete_recipe(database=DEFAULT_DB, name=None,):
+def delete_recipe(database=DEFAULT_DB, name=None, id=None):
 
     conn = sqlite3.connect(database)
     c = conn.cursor()
 
-    c.execute(f"DELETE from Recipes WHERE name='{name}'")
+    if not(name is None):
+        c.execute(f"DELETE from Recipes WHERE name={name}")
+
+    if not(id is None):
+        c.execute("DELETE from Recipes WHERE id=(?)",(id,))
+
     conn.commit()
 
 # row factory (should be moved elsewhere
@@ -91,6 +138,7 @@ def dict_factory(cursor, row):
     return d
 
 def get_recipe_dict(database=DEFAULT_DB, name=None):
+
 
     conn = sqlite3.connect(database)
     conn.row_factory = dict_factory

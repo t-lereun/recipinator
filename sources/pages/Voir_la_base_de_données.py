@@ -7,6 +7,11 @@ import os
 from pathlib import Path
 
 
+st.set_page_config(
+page_title="Recherche de recettes",
+page_icon="👀",
+)
+
 st.markdown("# Voir une base de données")
 st.sidebar.header("Voir une base de données")
 
@@ -29,13 +34,25 @@ filter = st.selectbox(
 )
 
 
-ingredient = st.text_input(
-        "Choisir un ingrédient",
-    )
+
+
+ingredients_av = process_db.scrap_ingredients(option)
+
+# ingredient = st.text_input(
+#         "Choisir un ingrédient",
+#     )
+
 
 
 # st.write("You selected:", option)
 if not(option==None):
+
+   ingredient = st.selectbox(
+      "Choisir un ingrédient",
+      ingredients_av,
+      index=None,
+   )
+
 
    path_to_db = os.path.join(Path(__file__).parents[2],'recipes',option)
 
@@ -45,6 +62,7 @@ if not(option==None):
 
    if not(filter==None):
       df = process_db.filter(df,filter=filter)
+      process_db.scrap_ingredients(option)
 
    if not(ingredient==None):
       df = process_db.filter_by_ingredient(df,ingredient=ingredient)
