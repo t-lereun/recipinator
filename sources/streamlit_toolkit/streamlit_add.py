@@ -3,6 +3,7 @@ import sqlite3 as sqlite
 from pandas import read_sql_query, read_sql_table
 from sources import add_recipe as ar
 from sources import init_database, common
+from sources.streamlit_toolkit import write_recipe
 import streamlit as st
 import os
 
@@ -30,7 +31,17 @@ def add_db():
         st.markdown(msg)
 
             
-        
+def get_diet():
+
+    options = common.DIETS
+
+    diet = st.selectbox(
+                    "Régime",
+                    options,
+                    index=None,
+                    )
+    return diet
+         
 
 
 def add_recipe(recipe=None, recipe_dict=None):
@@ -66,10 +77,11 @@ def add_recipe(recipe=None, recipe_dict=None):
         other_ingredients = st.text_input("Autres ingrédients (à marmitonner)", 
                                           recipe_dict['other_ingredients'])
         
-        regime_options = ['végé', 'vegan', 'omni']
-        regime = st.selectbox("Base de donnée à afficher",
-                                 regime_options,
-                                 index=None,)
+        # regime_options = ['végé', 'vegan', 'omni']
+        # regime = st.selectbox("Base de donnée à afficher",
+        #                          regime_options,
+        #                          index=None,)
+        diet = get_diet()
         
         submit = st.form_submit_button('Ajouter la recette')
 
@@ -80,7 +92,7 @@ def add_recipe(recipe=None, recipe_dict=None):
                 ingredient_1=ingredient_1, ingredient_2=ingredient_2,
                 ingredient_3=ingredient_3, ingredient_4=ingredient_4,
                 other_ingredients=other_ingredients,
-                regime=regime) 
+                regime=diet) 
         st.write("Recette ajoutée !")   
 
 

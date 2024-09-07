@@ -6,7 +6,7 @@ import glob
 DB_DIR = os.path.join(common.ROOT,'recipes')
 
 
-keys = ['name', 'cookbook', 'page', 'ingredient_1','ingredient_2', 'ingredient_3', 'ingredient_4', 'other_ingredients']
+keys = ['name', 'cookbook', 'page', 'ingredient_1','ingredient_2', 'ingredient_3', 'ingredient_4', 'other_ingredients',"regime"]
 dtype = {
     'name':'TEXT',
     'cookbook':'TEXT',
@@ -16,7 +16,7 @@ dtype = {
     'ingredient_3':'TEXT',
     'ingredient_4':'TEXT',
     'other_ingredients':'TEXT',
-    'comment':'TEXT'
+    'regime':'TEXT'
     }
 
 def check_db():

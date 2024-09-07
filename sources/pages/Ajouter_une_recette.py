@@ -1,6 +1,6 @@
 import streamlit as st
 from sources.streamlit_toolkit import streamlit_add, write_recipe
-
+from sources import add_recipe
 
 st.set_page_config(page_title="", page_icon="➕")
 
@@ -60,6 +60,9 @@ if oral_recipe or st.session_state.oral_recipe:
 
     title = write_recipe.recipe_title()
     text = write_recipe.recipe_textbox()
+    diet = add_recipe.get_diet()
 
-    write_recipe.save_text(text, title)
+    recipe_path = write_recipe.save_text(text, title)
+    add_recipe.add_from_md(recipe_path, diet)
+
 

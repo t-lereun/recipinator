@@ -1,5 +1,6 @@
 import streamlit as st
 from pathlib import Path
+from sources import common
 import os
 
 RECIPES_PATH = os.path.join(Path(__file__).parents[2],
@@ -48,6 +49,8 @@ def write_to_file(path, text, title):
     with open(path,'w') as f:
         f.write(text)
     f.close()
+
+
         
 
 
@@ -75,6 +78,8 @@ def save_text(text, title):
 
         text = f"# {title}\n\n" + text 
         st.markdown(text)
+
+        return recipe_path
                 
 
         

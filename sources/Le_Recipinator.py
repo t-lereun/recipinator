@@ -4,6 +4,7 @@ from sources import common
 import os
 from sources import init_database
 from sources.streamlit_toolkit import streamlit_add
+from sources import add_recipe
 
 
 st.set_page_config(
@@ -36,3 +37,8 @@ else:
 
 st.markdown("**En ajouter une nouvelle ?**")
 streamlit_add.add_db()
+
+# st =add_recipe.add_from_md(os.path.join(common.ROOT,'recipes',
+#                         'personal_recipes',"Cake_d'amour.md"))
+
+# print(st)
