@@ -17,6 +17,7 @@ def add_db():
                   value='recipes')
     
     # Path to db
+    print(db_name)
     db_path = os.path.join(DB_DIR,f"{db_name}.db")
 
     file_exists = os.path.isfile(db_path)
@@ -26,6 +27,7 @@ def add_db():
         if file_exists:
             msg = "**Il existe déjà une base de donnée portant ce nom !**"
         else: 
+            print(db_name)
             init_database.init_database(db_name)
             msg = "Base de donnée ajoutée !"
 
@@ -45,7 +47,7 @@ def get_diet(default=None):
          
 
 
-def add_recipe(recipe=None, recipe_dict=None):
+def add_recipe(db, recipe=None, recipe_dict=None):
 
     if recipe==None:
         recipe_dict = {
@@ -89,15 +91,16 @@ def add_recipe(recipe=None, recipe_dict=None):
 
     if submit:
         st.write("Ajout à la base de données...")
-        ar.add_recipe(name=name, cookbook=cookbook, page=page, 
+        ar.add_recipe(database=db, name=name, cookbook=cookbook, page=page, 
                 ingredient_1=ingredient_1, ingredient_2=ingredient_2,
                 ingredient_3=ingredient_3, ingredient_4=ingredient_4,
                 other_ingredients=other_ingredients,
                 regime=diet) 
         st.write("Recette ajoutée !")   
 
+        db_path = os.path.join(common.ROOT,'recipes', db)
 
-        cnx = sqlite.connect('./recipes/recipes.db')
+        cnx = sqlite.connect(db_path)
 
         df = pd.read_sql_query("SELECT * FROM Recipes", cnx)
 

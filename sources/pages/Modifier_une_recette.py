@@ -60,10 +60,10 @@ if not(database==None):
             diet_index = common.DIETS.index(diet)
             diet = streamlit_add.get_diet(default=diet_index)
             recipe_source = write_recipe.save_text(text, recipe)
-            add_recipe.add_from_md(recipe_source, diet)
+            add_recipe.add_from_md(database, recipe_source, diet)
 
         else:
-            streamlit_add.add_recipe(recipe, recipe_dict)
+            streamlit_add.add_recipe(database, recipe, recipe_dict)
 
 
 

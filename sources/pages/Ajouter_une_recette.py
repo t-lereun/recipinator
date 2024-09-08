@@ -1,6 +1,7 @@
 import streamlit as st
 from sources.streamlit_toolkit import streamlit_add, write_recipe
-from sources import add_recipe
+from sources import add_recipe, common
+
 
 st.set_page_config(page_title="", page_icon="✏️")
 
@@ -36,7 +37,7 @@ with col[0]:
 with col[1]:
         oral_recipe = st.button("Je veux écrire la recette")
 
-        
+db_list = common.get_db_list()      
 
 if "from_cookbook" not in st.session_state:
     st.session_state.from_cookbook = False
@@ -46,11 +47,15 @@ if "oral_recipe" not in st.session_state:
     st.session_state.ingredient_list = []
 
 if from_cookbook or st.session_state.from_cookbook:
+    db = st.selectbox("Dans quelle base de données?",
+                      options=db_list)
     st.session_state.oral_recipe = False
     st.session_state.from_cookbook = True
-    streamlit_add.add_recipe()
+    streamlit_add.add_recipe(db)
 
 if oral_recipe or st.session_state.oral_recipe:
+    db = st.selectbox("Dans quelle base de données?",
+                    options=db_list)
     st.session_state.from_cookbook = False
     st.session_state.oral_recipe = True
 
@@ -59,6 +64,6 @@ if oral_recipe or st.session_state.oral_recipe:
     diet = streamlit_add.get_diet()
 
     recipe_path = write_recipe.save_text(text, title)
-    add_recipe.add_from_md(recipe_path, diet)
+    add_recipe.add_from_md(db, recipe_path, diet)
 
 

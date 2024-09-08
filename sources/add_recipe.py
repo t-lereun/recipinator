@@ -3,8 +3,9 @@ from sources.init_database import keys
 import os
 from pathlib import Path
 import re
+from sources import common
 
-DEFAULT_DB = os.path.join(Path(__file__).parents[1],'recipes','recipes.db')
+DEFAULT_DB = "recipes"#os.path.join(Path(__file__).parents[1],'recipes','recipes.db')
 print(str(DEFAULT_DB))
 # "./recipes/recipes.db"
 
@@ -14,7 +15,9 @@ def add_recipe(database= DEFAULT_DB,
                ingredient_3=None, ingredient_4=None,
                other_ingredients=None, regime=None):
     
-    conn = sqlite3.connect(database)
+    db_path = os.path.join(common.ROOT,'recipes', database)
+
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
 
     recipe_dict = {
@@ -29,7 +32,8 @@ def add_recipe(database= DEFAULT_DB,
         'regime':regime
     }
 
-    id_number = find_from_name(database=DEFAULT_DB, name=name)
+    id_number = find_from_name(database=database, 
+                               name=name)
     print(id_number)
 
     # if not(id_number is None):
@@ -94,7 +98,9 @@ def add_recipe(database= DEFAULT_DB,
 
 def get_all_recipes(database=DEFAULT_DB):
 
-    conn = sqlite3.connect('./recipes/recipes.db')#sqlite3.connect(database)
+    db_path = os.path.join(common.ROOT,'recipes', database)
+
+    conn = sqlite3.connect(db_path) #sqlite3.connect(database)
     c = conn.cursor()
     # conn.row_factory = lambda cursor, row: row[0]
 
@@ -107,9 +113,8 @@ def get_all_recipes(database=DEFAULT_DB):
 
 def find_from_name(database=DEFAULT_DB, name=None):
 
-    #conn = sqlite3.connect('./recipes/recipes.db')
-    #conn = sqlite3.connect("/home/tlereun/recipinator/recipes/recipes.db")
-    conn = sqlite3.connect(database)
+    db_path = os.path.join(common.ROOT,'recipes', database)
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
 
     print(name)
@@ -120,7 +125,8 @@ def find_from_name(database=DEFAULT_DB, name=None):
 
 def delete_recipe(database=DEFAULT_DB, name=None, id=None):
 
-    conn = sqlite3.connect(database)
+    db_path = os.path.join(common.ROOT,'recipes', database)
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
 
     if not(name is None):
@@ -141,8 +147,8 @@ def dict_factory(cursor, row):
 
 def get_recipe_dict(database=DEFAULT_DB, name=None):
 
-
-    conn = sqlite3.connect(database)
+    db_path = os.path.join(common.ROOT,'recipes', database)
+    conn = sqlite3.connect(db_path)
     conn.row_factory = dict_factory
     c = conn.cursor()
 
@@ -156,8 +162,8 @@ def get_recipe_dict(database=DEFAULT_DB, name=None):
 def modify_recipe(database= DEFAULT_DB, name=None, keys_modify = [], values=[]):
 
     
-
-    conn = sqlite3.connect(database)
+    db_path = os.path.join(common.ROOT,'recipes', database)
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
 
 
@@ -204,7 +210,7 @@ def extract_title(content):
     title = re.sub(r'(#\s*)', '', content).strip()
     return title
 
-def add_from_md(md_path, regime):
+def add_from_md(database, md_path, regime):
 
     ### NOT CLEAR IF HERE OR IN WRITE RECIPE
     if not(md_path is None):
@@ -250,7 +256,7 @@ def add_from_md(md_path, regime):
             for i in range(4,len(ingredient_list)):
                 other_str += f"{ingredient_list[i]}, "
 
-        add_recipe(database=DEFAULT_DB, **recipe_dict)
+        add_recipe(database=database, **recipe_dict)
 
 
 
