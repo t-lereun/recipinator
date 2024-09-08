@@ -53,6 +53,14 @@ def get_ingredient_list(df, i):
     return full_ingredient_list.split(',')
 
 
+def season_style(df):
+
+    print("STYLING")
+    df.style.set_caption("Recettes classées par saison")
+    df.style.background_gradient(axis=0, 
+                                 gmap=df['season score'],
+                                 cmap='YlOrRd')
+    return df
 
 
 def score_by_season(df):
@@ -70,15 +78,14 @@ def score_by_season(df):
         for l in list_ingredients:
             if l in ALL_ING:
                 if l in season_list:
-                    print("saison",l)
                     season_score += 1
                 else: 
-                    print(l)
-                    season_score += -1
+                    season_score += -10
 
         df.loc[i,"season score"] = season_score
 
     df = df.sort_values("season score", ascending=False)
+    df = season_style(df)
 
     return df
 

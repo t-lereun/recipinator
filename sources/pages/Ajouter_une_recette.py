@@ -2,7 +2,7 @@ import streamlit as st
 from sources.streamlit_toolkit import streamlit_add, write_recipe
 from sources import add_recipe
 
-st.set_page_config(page_title="", page_icon="➕")
+st.set_page_config(page_title="", page_icon="✏️")
 
 def add_ingredient(ingredient, quantity, units):
     st.write(f'{quantity} {units} de {ingredient}')
@@ -41,26 +41,22 @@ with col[1]:
 if "from_cookbook" not in st.session_state:
     st.session_state.from_cookbook = False
 
-
 if "oral_recipe" not in st.session_state:
     st.session_state.oral_recipe = False
     st.session_state.ingredient_list = []
 
 if from_cookbook or st.session_state.from_cookbook:
+    st.session_state.oral_recipe = False
     st.session_state.from_cookbook = True
-    # st.session_state.oral_recipe = False
     streamlit_add.add_recipe()
 
 if oral_recipe or st.session_state.oral_recipe:
+    st.session_state.from_cookbook = False
     st.session_state.oral_recipe = True
-    # st.session_state.from_cookbook = False
-   
-
-    # st.markdown("**Ma recette !**")
 
     title = write_recipe.recipe_title()
     text = write_recipe.recipe_textbox()
-    diet = add_recipe.get_diet()
+    diet = streamlit_add.get_diet()
 
     recipe_path = write_recipe.save_text(text, title)
     add_recipe.add_from_md(recipe_path, diet)

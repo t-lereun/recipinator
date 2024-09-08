@@ -32,10 +32,10 @@ def recipe_title():
     
     return title
 
-def recipe_textbox():
+def recipe_textbox(default=recipe_default):
 
-    label = "**MIngrédients et instructions** (_en markdown_)"
-    text = st.text_area(label, value=recipe_default, 
+    label = "**Ingrédients et instructions** (_en markdown_)"
+    text = st.text_area(label, value=default, 
                 height=HEIGHT,
                 key='recipe_area',) 
     
@@ -46,21 +46,31 @@ def write_to_file(path, text, title):
     # Add title to text
     text = f"# {title}\n\n" + text 
 
+    print("printing" ,text)
+
     with open(path,'w') as f:
         f.write(text)
     f.close()
 
 
-        
+# Function to update the value in session state
+def clicked(button):
+    st.session_state.clicked[button] = True      
 
 
 def save_text(text, title):
 
+    # Initialize the key in session state
+    if 'clicked' not in st.session_state:
+        st.session_state.clicked = {1:False,2:False}
+
+
     recipe_name= title.replace(' ','_')
     text_button = "C'est _**moi**_ qui l'ai fait"
-    save_recipe = st.button(text_button)
+    st.button(text_button, on_click=clicked, args=[1])
 
-    if save_recipe:
+
+    if st.session_state.clicked[1]:
         recipe_path = os.path.join(RECIPES_PATH,
                                    f"{recipe_name}.{EXT}")
 
@@ -68,15 +78,18 @@ def save_text(text, title):
             error_msg = "**Il existe déjà une recette portant ce nom !**"
             st.markdown(error_msg)
             force_btn = st.button("**Engregistrer quand même !**")
-            
+            print("FORCE ?",force_btn)
+
             if force_btn:
+                print("FORCE")
                 write_to_file(recipe_path, text, title)
-                text = f"# {title}\n\n" + text 
+                print(" FORCE" , text)
+                # text = f"# {title}\n\n" + text 
 
         else: 
             write_to_file(recipe_path, text, title)
 
-        text = f"# {title}\n\n" + text 
+        # text = f"# {title}\n\n" + text 
         st.markdown(text)
 
         return recipe_path

@@ -1,9 +1,10 @@
 #  Le Recipinator
 
-_Le Recipinator_ est un programme pour collecter, trier et sélectionner et trier les recettesven fonction des ingrédients, des saisons, du régime alimentaire... Du moins, c'est ce qu'il aspire à devenir à mesure que le projet se développera. Il est déjà possible: 
+_Le Recipinator_ est un programme pour collecter, trier et sélectionner les recettes fonction des ingrédients, des saisons, du régime alimentaire... Le but initial est de collecter les recettes contenues dans nos livres pour les retrouver plus facilement selon l'envie, la saison, ou ce qu'il y a dans le placard. 
 
-- d'ajouter une recette;
-- de visualiser la base de donnée des recettes;
-- de trier les recettes suivant certains critères.
+À l'heure actuelle, le _Recipinator_ permet
+- d'ajouter une recette, y compris les instructions entières si elles ne sont dans aucun livre;
+- de visualiser la base de donnée des recettes pour en sélectionner une;
+- de trier les recettes suivant la saison, le régime alimentaire ou les ingrédients.
 
 

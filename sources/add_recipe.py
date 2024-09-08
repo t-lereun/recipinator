@@ -194,7 +194,7 @@ def extract_ingredients(content):
     ingredients = []
     for line in lines:
         # Remove quantities, units, and the word "of"
-        ingredient = re.sub(r'(\d+(\.\d+)?\s*\w*\s*|\s*(de|d\')\s*)', '', line).strip()
+        ingredient = re.sub(r'(\d+\s*\w*\s(d\'|de))|(\d+\s*)', '', line).strip()
         ingredients.append(ingredient)
 
     return ingredients
@@ -209,15 +209,23 @@ def add_from_md(md_path, regime):
     ### NOT CLEAR IF HERE OR IN WRITE RECIPE
     if not(md_path is None):
 
+        print("ADDING FROM MD")
+        print('md path', md_path)
+
+
         recipe_md = open(md_path, 'r').read()
+        print(recipe_md)
 
         sections = recipe_md.split("\n## ")
 
         title = extract_title(sections[0])
 
-        ingredient_st = sections[1].strip()
-        ingredient_list = extract_ingredients(ingredient_st)
+        print("SECTION 1",sections[1])
 
+        ingredient_st = sections[1].strip()
+        print("SECTION 1", ingredient_st)
+        ingredient_list = extract_ingredients(ingredient_st)
+        print(ingredient_list)
 
         recipe_dict = {
             'name':title,

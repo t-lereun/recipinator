@@ -8,7 +8,8 @@ import streamlit as st
 import os
 
 # st.title('The Recipinator')
-DB_DIR = init_database.DB_DIR
+# DB_DIR = init_database.DB_DIR
+DB_DIR = os.path.join(common.ROOT,'recipes')
 
 def add_db():
 
@@ -31,14 +32,14 @@ def add_db():
         st.markdown(msg)
 
             
-def get_diet():
+def get_diet(default=None):
 
     options = common.DIETS
 
     diet = st.selectbox(
                     "Régime",
                     options,
-                    index=None,
+                    index=default,
                     )
     return diet
          
