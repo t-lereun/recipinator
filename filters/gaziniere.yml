@@ -136,7 +136,7 @@ october:
   good:
     - choux verts
     - choux blancs
-    - choux fleur
+    - choux-fleur
     - choux romanesco
     - brocolis
     - châtaignes
@@ -145,7 +145,16 @@ october:
     - pomme
     - grenade
     - blette
+    - kiwi
+    - figue
+    - betterave
   best:
+    - raisin
+    - châtaigne
+    - coing
+    - noisette
+    - patates douces
+    - céleri rave
     - courges
     - poires
 
